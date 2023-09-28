@@ -1,0 +1,7 @@
+<odoo>
+    <template id="assets_backend" name="voodoo_devices_assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" type="text/css" href="/voodoo_devices/static/src/css/custom.css"/>
+        </xpath>
+    </template>
+</odoo>

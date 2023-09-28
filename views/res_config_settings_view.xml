@@ -1,0 +1,37 @@
+<odoo>
+
+    <record id="view_res_config_settings_form" model="ir.ui.view">
+        <field name="name">res.config.settings.form</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('settings')]" position="inside">
+                <div class="app_settings_block" string="Voodoo Devices" data-key="voodoo_devices" data-string="Voodoo Devices" groups="base.group_system">
+                    <h2>Voodoo Robotics Connection Settings</h2>
+                    <div class="row mt16 o_settings_container" name="voodoo_setting_container">
+                        <div class="col-12">
+                            <div class="row mt16">
+                                <label for="endpoint_url" class="col-form-label col-md-3" string="Voodoo Endpoint URL"/>
+                                <div class="col-md-9">
+                                    <field name="endpoint_url" class="oe_inline" style="width:100% !important"/>
+                                </div>
+                            </div>
+                            <div class="row mt16">
+                                <label for="username" class="col-form-label col-md-3" string="Username"/>
+                                <div class="col-md-9">
+                                    <field name="username" class="oe_inline"/>
+                                </div>
+                            </div>
+                            <div class="row mt16">
+                                <label for="password" class="col-form-label col-md-3" string="Password"/>
+                                <div class="col-md-9">
+                                    <field name="password" class="oe_inline" password="True"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>
