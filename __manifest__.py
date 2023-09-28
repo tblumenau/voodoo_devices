@@ -8,6 +8,7 @@
         'views/stock_location_view_extension.xml',
         'views/stock_picking_view_extension.xml',
         'views/stock_picking_batch_view_extension.xml',
+        'views/stock_picking_wave_view_extension.xml',
         'views/res_config_settings_view.xml'
     ],
     'assets': {
