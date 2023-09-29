@@ -44,7 +44,7 @@ class StockPickingWaveInherited(models.Model):
                 else:
                     data['line4'] = 'Qty: '+ str(move.product_uom_qty)
                 
-                data['nonce'] = 'moveid=' + str(move.id)
+                data['nonce'] = '{"moveid":' + str(move.id) +'}'
                 self.with_delay(priority=0,max_retries=1).enqueue_voodooDeviceCall(dev_id,data)
 
             
@@ -70,7 +70,7 @@ class StockPickingWaveInherited(models.Model):
                 else:
                     data['line4'] = 'Qty: '+ str(move.product_uom_qty)
                     
-                data['nonce'] = 'moveid=' + str(move.id)
+                data['nonce'] = '{"moveid":' + str(move.id) +'}'
                 self.with_delay(priority=0,max_retries=1).enqueue_voodooDeviceCall(dev_id,data)
 
         return
