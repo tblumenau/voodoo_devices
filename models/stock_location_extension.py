@@ -80,6 +80,7 @@ class StockLocationInherited(models.Model):
 
         return result
     
+    @api.model_create_multi
     def create(self, vals_list):
         # Step 1: Extract voodoo_device_id values from vals_list
         new_voodoo_ids = set(vals.get('voodoo_device_id') for vals in vals_list)

@@ -1,6 +1,7 @@
 from odoo import models, _
 from ..util import VoodooUtility
 
+    
 class StockPickingWaveInherited(models.Model):
     _inherit = 'stock.picking.wave'
     # _name = 'voodoo.stock_picking_inherited'
@@ -45,6 +46,9 @@ class StockPickingWaveInherited(models.Model):
                     data['line4'] = 'Qty: '+ str(move.product_uom_qty)
                 
                 data['nonce'] = '{"moveid":' + str(move.id) +'}'
+                data['color'] = self.env.user.voodoo_device_color
+                if self.env.user.voodoo_device_beep!='disabled':
+                    data['sound'] = self.env.user.voodoo_device_beep
                 self.with_delay(priority=0,max_retries=1).enqueue_voodooDeviceCall(dev_id,data)
 
             
@@ -71,6 +75,9 @@ class StockPickingWaveInherited(models.Model):
                     data['line4'] = 'Qty: '+ str(move.product_uom_qty)
                     
                 data['nonce'] = '{"moveid":' + str(move.id) +'}'
+                data['color'] = self.env.user.voodoo_device_color
+                if self.env.user.voodoo_device_beep!='disabled':
+                    data['sound'] = self.env.user.voodoo_device_beep
                 self.with_delay(priority=0,max_retries=1).enqueue_voodooDeviceCall(dev_id,data)
 
         return

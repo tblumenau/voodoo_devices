@@ -211,12 +211,29 @@ class VoodooUtility:
 
 
 
-
+                lname = location.complete_name
+                
+                while len(lname) > 26:
+                    # Find the index of the first '\' character
+                    index = lname.find('/')
+                    
+                    # Check if '\' was found
+                    if index != -1:
+                        # Remove the first chunk including '\' from the original string
+                        lname = lname[index + 1:]
+                    else:
+                        # No '\' found, break to avoid an infinite loop
+                        break
+                
+                if len(lname)>0 and len(lname)<=26:
+                    data['locationoverride'] = lname
+                else:
+                    data['locationoverride'] = 'Bad Location Name!'
 
                 arrow = VoodooUtility.getArrow(location)  # note this is singular--> ie an object!
                 data['arrow']=arrow
 
-                if name:
+                if name and total_quantity>0:
                     _logger.info("one location and one inventory type")
                     if ' - ' in name:
                         statica, staticb = name.split(' - ', 1)
@@ -238,27 +255,11 @@ class VoodooUtility:
                 else:
                     _logger.info("one location but multiple inventory types")
 
-                    data['statica']='various'
-                    data['staticb']='items'
+                    data['statica']=lname
+                    data['staticb']='\\bc'+str(deviceid)
+                
 
-                lname = location.complete_name
                 
-                while len(lname) > 26:
-                    # Find the index of the first '\' character
-                    index = lname.find('/')
-                    
-                    # Check if '\' was found
-                    if index != -1:
-                        # Remove the first chunk including '\' from the original string
-                        lname = lname[index + 1:]
-                    else:
-                        # No '\' found, break to avoid an infinite loop
-                        break
-                
-                if len(lname)>0 and len(lname)<=26:
-                    data['locationoverride'] = lname
-                else:
-                    data['locationoverride'] = 'Bad Location Name!'
 
 
             try:

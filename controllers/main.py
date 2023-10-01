@@ -1,22 +1,30 @@
 from odoo import http
 from odoo.http import request
+import json
 
 class ExternalRpcController(http.Controller):
 
     @http.route('/external_rpc/receive', type='json', auth='user')
     def receive_call_back(self, **kwargs):
-        json_data = request.jsonrequest
-        nonce = json_data.get('nonce')
-        move_id = nonce.get('moveId')
-        qty = json_data.get('qty')
         
-        # Retrieve the stock.move record
-        move = request.env['stock.move'].browse(move_id)
+        data = json.loads(request.httprequest.data)
+        qty = data.get('qty')
+        ack = data.get('acknack')
+        nonce = data.get('nonce')
         
-        # Update the done quantity
-        move.write({'quantity_done': qty})
+        move_id = json.loads(nonce).get('moveid')
+           
+        if ack and qty>0:
+            # Retrieve the stock.move record
+            move = request.env['stock.move'].browse(move_id)
+            
+            # Update the done quantity
+            move.write({'quantity_done': qty})
 
-        return {"status": "success", "message": "Quantity updated successfully"}
+            return {"status": "success", "message": "Quantity updated successfully"}
+        else:
+            return {"status": "success", "message": "Quantity not updated"}
+
 
 
 # COOKIE_FILE=$(mktemp) && wget --save-cookies $COOKIE_FILE --post-data 'login=your_login&password=your_password' 
