@@ -21,7 +21,7 @@
                 <div class="o_row">
                     <div class="col-6">
                         <label for="voodoo_name" class="oe_label"/>
-                        <field name="voodoo_name"/>
+                        <field name="voodoo_name" style="width: 150px"/>
                     </div>
                 </div>
                 <div class="o_row">

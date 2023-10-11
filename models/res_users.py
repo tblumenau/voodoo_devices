@@ -19,7 +19,11 @@ class ResUsers(models.Model):
         default = 'disabled'
     )
 
-    voodoo_name = fields.Char(string='Voodoo Name', help ='Name to appear on Voodoo Device.  Leave blank to remove this line.')
+    voodoo_name = fields.Char(
+        string='Voodoo Name', 
+        help ='Name to appear on Voodoo Device.  Leave blank to remove this line.',
+        size = 26
+    )
 
     voodoo_seconds = fields.Integer(
         string='Voodoo Seconds',
