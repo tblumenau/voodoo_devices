@@ -2,9 +2,7 @@
 import logging
 import requests
 
-# from odoo.addons.component.core import Component
 from odoo import models, api, _
-# from odoo.addons.queue_job import job
 
 from datetime import datetime, timedelta
 
@@ -14,8 +12,6 @@ _logger = logging.getLogger(__name__)
 
 class VoodooUtility:
 
-    # _abstract = True
-    # _register = False
 
     @staticmethod
     def getArrow(location):
@@ -72,36 +68,7 @@ class VoodooUtility:
         else:
             response.raise_for_status()
         
-    # @staticmethod
-    # def notify_error(selfy, error_message):
-
-    #     ICPSudo = selfy.env['ir.config_parameter'].sudo()
-
-    #     # Get the current time
-    #     now = datetime.now()
-
-    #     # Define the rate limit (e.g., 1 message every minute)
-    #     rate_limit = timedelta(minutes=1)
-
-    #     # Retrieve the last error timestamp from ir.config_parameter
-    #     last_error_timestamp = ICPSudo.get_param('voodoo.error_timestamp')
-
-    #     if last_error_timestamp:
-    #         last_error_timestamp = datetime.strptime(last_error_timestamp, "%Y-%m-%d %H:%M:%S.%f")
-
-    #     # Check if the last message was sent more than the rate limit ago
-    #     if not last_error_timestamp or now - last_error_timestamp > rate_limit:
-    #         # Send the message to the current user
-    #         general_channel = selfy.env['mail.channel'].sudo().search([('name', '=', 'general')], limit=1)
-    #         if general_channel:
-    #             # Post a message to the General channel
-    #             _logger.info("Posted to general!")
-    #             general_channel.message_post(body=error_message, subject=error_message, 
-    #                                         message_type='comment', subtype_xmlid="mail.mt_comment")
-    #         # Update the timestamp of the last error message sent
-    #         ICPSudo.set_param('voodoo.error_timestamp', str(now))
-    #     else:
-    #         _logger.error("Too soon for another warning to user.")
+    
 
     @staticmethod
     def voodooDeviceCall(selfy,deviceID, data):
@@ -269,3 +236,84 @@ class VoodooUtility:
 
 
 
+    @staticmethod
+    def processMove(selfy,move):
+        name = move.product_id.display_name
+
+        # Check if the source location has a voodoo_device_id
+        dev_id = move.location_id.voodoo_device_id
+        if dev_id:
+            arrow = VoodooUtility.getArrow(move.location_id)
+
+            data = {}
+            data['command']='flash'
+            data['arrow']=arrow
+
+            if selfy.env.user.voodoo_name and selfy.env.user.voodoo_name!='':
+                data['line1'] = selfy.env.user.voodoo_name
+
+            data['line2']="PICK"
+
+            # if ' - ' in name:
+            #     line1, line2 = name.split(' - ', 1)
+            #     data['line3'] = line1
+            #     data['line4'] = line2
+            # else:
+            #     data['line3'] = name
+            data['line3'] = name
+
+            if move.product_uom_qty % 1 == 0:
+                data['quantity']= int(move.product_uom_qty)
+            else:
+                data['line4'] = 'Qty: '+ str(move.product_uom_qty)
+            
+            data['nonce'] = '{"moveid":' + str(move.id) +'}'
+            data['color'] = selfy.env.user.voodoo_device_color
+            
+            if selfy.env.user.voodoo_device_beep!='disabled':
+                data['sound'] = selfy.env.user.voodoo_device_beep
+
+            if selfy.env.user.voodoo_seconds and selfy.env.user.voodoo_seconds>0:
+                data['seconds'] = selfy.env.user.voodoo_seconds
+
+            selfy.with_delay(priority=0,max_retries=1).enqueue_voodooDeviceCall(dev_id,data)
+
+        
+        # Check if the destination location has a voodoo_device_id
+        dev_id = move.location_dest_id.voodoo_device_id
+        if dev_id:
+            arrow = VoodooUtility.getArrow(move.location_dest_id)
+
+            data = {}
+            data['command']='flash'
+            data['arrow']=arrow
+
+            if selfy.env.user.voodoo_name and selfy.env.user.voodoo_name!='':
+                data['line1'] = selfy.env.user.voodoo_name
+
+
+            data['line2']="PUT"
+
+            # if ' - ' in name:
+            #     line1, line2 = name.split(' - ', 1)
+            #     data['line3'] = line1
+            #     data['line4'] = line2
+            # else:
+            #     data['line3'] = name
+            data['line3'] = name
+
+            if move.product_uom_qty % 1 == 0:
+                data['quantity']= int(move.product_uom_qty)
+            else:
+                data['line4'] = 'Qty: '+ str(move.product_uom_qty)
+                
+            data['nonce'] = '{"moveid":' + str(move.id) +'}'
+            data['color'] = selfy.env.user.voodoo_device_color
+
+            if selfy.env.user.voodoo_device_beep!='disabled':
+                data['sound'] = selfy.env.user.voodoo_device_beep
+
+            if selfy.env.user.voodoo_seconds and selfy.env.user.voodoo_seconds>0:
+                data['seconds'] = selfy.env.user.voodoo_seconds
+
+            selfy.with_delay(priority=0,max_retries=1).enqueue_voodooDeviceCall(dev_id,data)
