@@ -18,6 +18,18 @@
                         <field name="voodoo_device_beep"/>
                     </div>
                 </div>
+                <div class="o_row">
+                    <div class="col-6">
+                        <label for="voodoo_name" class="oe_label"/>
+                        <field name="voodoo_name"/>
+                    </div>
+                </div>
+                <div class="o_row">
+                    <div class="col-6">
+                        <label for="voodoo_seconds" class="oe_label"/>
+                        <field name="voodoo_seconds"/>
+                    </div>
+                </div>
             </xpath>
         </field>
     </record>

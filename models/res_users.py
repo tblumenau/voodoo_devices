@@ -1,19 +1,36 @@
-from odoo import api, fields, models
-
-class ResUsers(models.Model):
-    _inherit = 'res.users'
-
-    voodoo_device_color = fields.Selection(
-        [('red', 'Red'), ('green', 'Green'), ('blue', 'Blue'), ('cyan', 'Cyan'), ('magenta','Magenta'), ('yellow','Yellow')],
-        string='Voodoo Device Color',
-        help='Select your preferred Voodoo Device Color.',
-        required = True,
-        default = 'red'
-    )
-    voodoo_device_beep = fields.Selection(
-        [('disabled', 'Disabled'), ('15,c5,4', 'Enabled')],
-        string='Voodoo Device Beep',
-        help='Enable a beep when picking.',
-        required = True,
-        default = 'disabled'
-    )
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_users_form_inherit" model="ir.ui.view">
+        <field name="name">res.users.preferences.form.inherit</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form_simple_modif"/>
+        <field name="arch" type="xml">
+           <xpath expr="//field[@name='signature']/ancestor::group[1]" position="after">
+                <div class="o_row">
+                    <div class="col-6">
+                        <label for="voodoo_device_color" class="oe_label"/>
+                        <field name="voodoo_device_color"/>
+                    </div>
+                </div>
+                <div class="o_row">
+                    <div class="col-6">
+                        <label for="voodoo_device_beep" class="oe_label"/>
+                        <field name="voodoo_device_beep"/>
+                    </div>
+                </div>
+                <div class="o_row">
+                    <div class="col-6">
+                        <label for="voodoo_name" class="oe_label"/>
+                        <field name="voodoo_name"/>
+                    </div>
+                </div>
+                <div class="o_row">
+                    <div class="col-6">
+                        <label for="voodoo_seconds" class="oe_label"/>
+                        <field name="voodoo_seconds"/>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>
