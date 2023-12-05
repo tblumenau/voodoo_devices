@@ -27,7 +27,7 @@
                 <div class="o_row">
                     <div class="col-6">
                         <label for="voodoo_seconds" class="oe_label"/>
-                        <field name="voodoo_seconds"/>
+                        <field name="voodoo_seconds" style="width: 50px"/>
                     </div>
                 </div>
             </xpath>
