@@ -27,7 +27,7 @@
             'voodoo_devices/static/src/css/custom.css',
         ],
     },
-    "images": ['static/images/banner.png', 'static/description/device.webp']
+    "images": ['static/images/banner.png', 'static/description/device.webp'],
     'license': 'LGPL-3',
     'installable': True,
     'auto_install': False,
