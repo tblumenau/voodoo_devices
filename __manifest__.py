@@ -1,7 +1,7 @@
 {
     'name': 'Voodoo Devices',
     'version': '1.0',
-    'category': 'Inventory Management',
+    'category': 'Warehouse',
     'summary': 'Add support for Voodoo Robotics cloud display devices',
     
 #   Choose which line to uncomment below based on your use of batch or wave picking
