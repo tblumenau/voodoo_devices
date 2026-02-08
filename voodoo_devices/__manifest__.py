@@ -1,15 +1,15 @@
 {
     'name': 'Voodoo Devices',
-    'version': '1.0',
+    'version': '18.0.1.0.0',
     'category': 'Warehouse',
     'summary': 'Enhance warehouse efficiency with this Odoo addon from Voodoo Robotics, seamlessly integrating IoT pick-to-light systems for optimized picking, putting, kitting, and more, streamlining operations with real-time guidance and automation.',
     'author': 'Voodoo Robotics',
     'website': 'https://voodoorobotics.com/',
 #   Choose which line to uncomment below based on your use of batch or wave picking
-#    'depends': ['stock','stock_sms','queue_job', 'web', 'stock_picking_batch', 'stock_picking_wave'],
-#    'depends': ['stock','stock_sms','queue_job', 'web', 'stock_picking_batch'],
-#    'depends': ['stock','stock_sms','queue_job', 'web', 'stock_picking_wave'],
-    'depends': ['stock','stock_sms','queue_job', 'web'],
+#    'depends': ['stock','queue_job', 'web', 'stock_picking_batch', 'stock_picking_wave'],
+#    'depends': ['stock','queue_job', 'web', 'stock_picking_batch'],
+#    'depends': ['stock','queue_job', 'web', 'stock_picking_wave'],
+    'depends': ['stock','queue_job', 'web'],
     
     
     'data': [
