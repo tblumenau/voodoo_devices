@@ -6,24 +6,27 @@ class ExternalRpcController(http.Controller):
 
     @http.route('/external_rpc/receive', type='json', auth='user')
     def receive_call_back(self, **kwargs):
-        
-        data = json.loads(request.httprequest.data)
+        data = request.jsonrequest or {}
         qty = data.get('qty')
         ack = data.get('acknack')
         nonce = data.get('nonce')
-        
-        move_id = json.loads(nonce).get('moveid')
-           
-        if ack and qty>0:
+
+        move_id = None
+        if nonce:
+            move_id = json.loads(nonce).get('moveid')
+
+        if ack and qty and qty > 0 and move_id:
             # Retrieve the stock.move record
             move = request.env['stock.move'].browse(move_id)
-            
-            # Update the done quantity
-            move.write({'quantity_done': qty})
 
-            return {"status": "success", "message": "Quantity updated successfully"}
-        else:
-            return {"status": "success", "message": "Quantity not updated"}
+            if move.exists():
+                # Update the done quantity
+                move.write({'quantity_done': qty})
+                return {"status": "success", "message": "Quantity updated successfully"}
+
+            return {"status": "error", "message": "Move not found"}
+
+        return {"status": "success", "message": "Quantity not updated"}
 
 
 
