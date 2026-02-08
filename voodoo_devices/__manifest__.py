@@ -1,6 +1,6 @@
 {
     'name': 'Voodoo Devices',
-    'version': '1.0',
+    'version': '19.0.1.0.0',
     'category': 'Warehouse',
     'summary': 'Enhance warehouse efficiency with this Odoo addon from Voodoo Robotics, seamlessly integrating IoT pick-to-light systems for optimized picking, putting, kitting, and more, streamlining operations with real-time guidance and automation.',
     'author': 'Voodoo Robotics',
