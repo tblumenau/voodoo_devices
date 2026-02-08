@@ -6,8 +6,8 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='replenish_location']" position="after">
                 <field name="voodoo_device_id"/>
-                <field name="voodoo_device_orientation" readonly="not voodoo_device_id"/>
-            </xpath>            
+                <field name="voodoo_device_orientation" attrs="{'readonly': [('voodoo_device_id', '=', False)]}"/>
+            </xpath>
         </field>
     </record>
 </odoo>

@@ -6,10 +6,10 @@
     'author': 'Voodoo Robotics',
     'website': 'https://voodoorobotics.com/',
 #   Choose which line to uncomment below based on your use of batch or wave picking
-#    'depends': ['stock','stock_sms','queue_job', 'web', 'stock_picking_batch', 'stock_picking_wave'],
-#    'depends': ['stock','stock_sms','queue_job', 'web', 'stock_picking_batch'],
-#    'depends': ['stock','stock_sms','queue_job', 'web', 'stock_picking_wave'],
-    'depends': ['stock','stock_sms','queue_job', 'web'],
+#    'depends': ['stock','queue_job', 'web', 'stock_picking_batch', 'stock_picking_wave'],
+#    'depends': ['stock','queue_job', 'web', 'stock_picking_batch'],
+#    'depends': ['stock','queue_job', 'web', 'stock_picking_wave'],
+    'depends': ['stock','queue_job', 'web'],
     
     
     'data': [
